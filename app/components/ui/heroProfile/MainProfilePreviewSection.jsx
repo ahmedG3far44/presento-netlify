@@ -16,9 +16,7 @@ function MainProfilePreviewSection({
   bio,
   isLogged,
 }) {
-  //   const initialLayout = JSON.parse(JSON.stringify(layouts));
   const [layoutStyle, setLayouts] = useState(layouts);
-
   return (
     <>
       <Hero

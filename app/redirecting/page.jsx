@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import "../globals.css";
+import credentials from "../credentials/credentials";
 
 const verifyUser = async (user) => {
   try {
@@ -11,7 +12,7 @@ const verifyUser = async (user) => {
       },
       body: JSON.stringify(user),
     });
-    const data = request.json();
+    const data = await request.json();
     return data;
   } catch (error) {
     console.log(error.message);
@@ -19,10 +20,7 @@ const verifyUser = async (user) => {
   }
 };
 async function RedirectingPage() {
-  const { getUser, getPermission } = await getKindeServerSession();
-  const isAdmin = await getPermission("admin:create");
-
-  const user = await getUser();
+  const { user } = await credentials();
 
   const payload = {
     id: user?.id,
@@ -32,11 +30,14 @@ async function RedirectingPage() {
     picture: user?.picture,
     role: "user",
   };
-  await verifyUser(payload);
+  const result = await verifyUser(payload);
 
-  return isAdmin
-    ? redirect(`/${user?.id}/dashboard`)
-    : redirect(`/${user?.id}`);
+  // console.log(result);
+  {
+    result.role === "user"
+      ? redirect(`/${user.id}`)
+      : redirect(`/${user.id}/dashboard`);
+  }
 }
 
 export default RedirectingPage;

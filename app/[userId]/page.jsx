@@ -27,11 +27,11 @@ const getUserInfo = async (userId) => {
   }
 };
 
-async function UserPage({ params }) {
-  const { userId } = params;
-  const { isLogged } = await credentials();
-  const userInfo = await getUserInfo(userId);
-  const layouts = await getUserLayouts(userId);
+async function UserPage() {
+  // const { userId } = params;
+  const { isLogged, user } = await credentials();
+  const userInfo = await getUserInfo(user.id);
+  const layouts = await getUserLayouts(user.id);
   const {
     bio,
     ExperiencesList,
@@ -40,7 +40,7 @@ async function UserPage({ params }) {
     contacts,
     Testimonials,
     picture,
-  } = userInfo;
+  } = await userInfo;
 
   return (
     <div
