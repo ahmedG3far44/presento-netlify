@@ -1,9 +1,9 @@
-import Container from "../components/ui/containers/Container";
 import Header from "../components/ui/nav/Header";
-import { revalidatePath } from "next/cache";
 import credentials from "../credentials/credentials";
+import Container from "../components/ui/containers/Container";
 import Footer from "../components/ui/sections/Footer";
 import MainProfilePreviewSection from "../components/ui/heroProfile/MainProfilePreviewSection";
+import { revalidatePath } from "next/cache";
 
 const getUserLayouts = async (userId) => {
   try {
@@ -12,7 +12,7 @@ const getUserLayouts = async (userId) => {
     revalidatePath(`/${userId}`);
     return data;
   } catch (error) {
-    return error.message;
+    return error;
   }
 };
 
@@ -23,12 +23,11 @@ const getUserInfo = async (userId) => {
     revalidatePath(`/${userId}`);
     return data;
   } catch (error) {
-    return error.message;
+    return error;
   }
 };
 
 async function UserPage() {
-  // const { userId } = params;
   const { isLogged, user } = await credentials();
   const userInfo = await getUserInfo(user.id);
   const layouts = await getUserLayouts(user.id);
@@ -43,7 +42,7 @@ async function UserPage() {
   } = await userInfo;
 
   return (
-    <div
+    <main
       className="
      flex flex-col justify-start items-center gap-10 m-auto w-full max-w-full overflow-x-hidden overflow-y-auto no-scrollbar"
     >
@@ -61,7 +60,7 @@ async function UserPage() {
         />
       </Container>
       <Footer picture={picture} />
-    </div>
+    </main>
   );
 }
 
