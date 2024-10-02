@@ -8,7 +8,7 @@ import MainProfilePreviewSection from "../components/ui/heroProfile/MainProfileP
 const getUserLayouts = async (userId) => {
   try {
     const request = await fetch(`http://localhost:4000/api/${userId}/layouts`);
-    const data = request.json();
+    const data = await request.json();
     revalidatePath(`/${userId}`);
     return data;
   } catch (error) {
@@ -19,7 +19,7 @@ const getUserLayouts = async (userId) => {
 const getUserInfo = async (userId) => {
   try {
     const request = await fetch(`http://localhost:4000/api/${userId}/user`);
-    const data = request.json();
+    const data = await request.json();
     revalidatePath(`/${userId}`);
     return data;
   } catch (error) {
@@ -29,9 +29,9 @@ const getUserInfo = async (userId) => {
 
 async function UserPage({ params }) {
   const { userId } = params;
-  const { isLogged, user } = await credentials();
-  const userInfo = await getUserInfo(userId || user?.id);
-  const layouts = await getUserLayouts(userId || user?.id);
+  const { isLogged } = await credentials();
+  const userInfo = await getUserInfo(userId);
+  const layouts = await getUserLayouts(userId);
   const {
     bio,
     ExperiencesList,
