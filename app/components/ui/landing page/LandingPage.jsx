@@ -8,7 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ModeToggle } from "../../../../components/dark-mode-toggle";
 import { LuDribbble, LuGithub, LuLinkedin, LuWand2 } from "react-icons/lu";
-import { LuSparkles } from "react-icons/lu";
+// import { LuSparkles } from "react-icons/lu";
 import { TbCubePlus } from "react-icons/tb";
 import { PiExcludeSquareDuotone } from "react-icons/pi";
 import { PiStackPlusDuotone } from "react-icons/pi";

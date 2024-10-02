@@ -29,9 +29,9 @@ const getUserInfo = async (userId) => {
 
 async function UserPage({ params }) {
   const { userId } = params;
-  const { isLogged } = await credentials();
-  const userInfo = await getUserInfo(userId);
-  const layouts = await getUserLayouts(userId);
+  const { isLogged, user } = await credentials();
+  const userInfo = await getUserInfo(userId || user?.id);
+  const layouts = await getUserLayouts(userId || user?.id);
   const {
     bio,
     ExperiencesList,

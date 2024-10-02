@@ -31,18 +31,20 @@ function ItemsList({ list, sectionName }) {
     "https://media.istockphoto.com/id/1409329028/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=170667a&w=0&k=20&c=Q7gLG-xfScdlTlPGFohllqpNqpxsU1jy8feD_fob87U="
   );
   const { userId } = useParams();
-  const filteredList = list?.filter((item) => {
-    switch (sectionName) {
-      case "experiences":
-        return item.cName.toLowerCase().includes(search.toLowerCase());
-      case "projects":
-        return item.title.toLowerCase().includes(search.toLowerCase());
-      case "skills":
-        return item.skillName.toLowerCase().includes(search.toLowerCase());
-      default:
-        break;
-    }
-  });
+  const filteredList =
+    !!list.length &&
+    list?.filter((item) => {
+      switch (sectionName) {
+        case "experiences":
+          return item.cName.toLowerCase().includes(search.toLowerCase());
+        case "projects":
+          return item.title.toLowerCase().includes(search.toLowerCase());
+        case "skills":
+          return item.skillName.toLowerCase().includes(search.toLowerCase());
+        default:
+          break;
+      }
+    });
 
   return (
     <div className="flex flex-col justify-start items-start gpa-4 ">
@@ -66,7 +68,7 @@ function ItemsList({ list, sectionName }) {
       </div>
 
       <div className="w-full   my-10 ">
-        {!!filteredList?.length ? (
+        {!!filteredList.length ? (
           <div className="w-full flex flex-col justify-start items-center gap-2 ">
             {filteredList.map((item) => {
               const lastUpdate =
@@ -75,7 +77,7 @@ function ItemsList({ list, sectionName }) {
               return (
                 <div
                   key={item.id}
-                  className="w-full flex justify-start items-center gap-4 bg-card rounded-md  py-4 px-2 mb-2"
+                  className="w-full flex justify-start items-center gap-4 bg-card  border-b  py-4 px-2 mb-2"
                 >
                   {sectionName === "experiences" && (
                     <div className=" flex justify-center gap-2 max-sm:gap-2 items-center w-3/4 max-sm:w-full max-md:w-full max-sm:flex-col max-md:flex-col max-sm:items-start max-md:items-start">
